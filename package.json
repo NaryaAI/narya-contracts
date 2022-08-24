@@ -1,0 +1,12 @@
+{
+  "name": "@pwnednomore/contracts",
+  "description": "Smart contracts for automatic bug finding",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PwnedNoMore/pwnednomore-contracts.git"
+  },
+  "scripts": {},
+  "author": "PWNED NO MORE Labs, Inc.",
+  "license": "MIT"
+}
