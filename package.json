@@ -1,12 +1,17 @@
 {
   "name": "@pwnednomore/contracts",
-  "description": "Smart contracts for automatic bug finding",
+  "description": "Smart contracts made by PwnedNoMore",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PwnedNoMore/pwnednomore-contracts.git"
+    "url": "git+https://github.com/PwnedNoMore/pwnednomore-contracts.git"
   },
   "scripts": {},
-  "author": "PWNED NO MORE Labs, Inc.",
-  "license": "MIT"
+  "author": "PwnedNoMore",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PwnedNoMore/pwnednomore-contracts/issues"
+  },
+  "homepage": "https://github.com/PwnedNoMore/pwnednomore-contracts#readme",
+  "main": "index.js"
 }
