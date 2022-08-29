@@ -7,24 +7,38 @@ struct Call {
 }
 
 contract Agent {
-    function test(Call[] calldata calls) external {
+    function run(Call[] calldata calls) external {
         for (uint256 i = 0; i < calls.length; i++) {
             (bool success, ) = calls[i].to.call(calls[i].callData);
             if (success) {
                 this.check();
+            } else {
+                return;
             }
         }
     }
 
-    function callback(Call[] calldata calls) external payable {
+    function _callback(Call[] calldata calls) internal {
         for (uint256 i = 0; i < calls.length; i++) {
             (bool success, ) = calls[i].to.call(calls[i].callData);
-            if (success) {}
+            if (!success) {
+                return;
+            }
         }
     }
 
-    function nop() external payable {}
+    function onERC721Received(Call[] calldata calls) external returns (bytes4) {
+        _callback(calls);
+        return bytes4(0x150b7a02);
+    } 
+
+    function fallback(Call[] calldata calls) external payable {
+        _callback(calls);
+    }
+
+    function callback(Call[] calldata calls) external {
+        _callback(calls);
+    }
 
     function check() external virtual {}
 }
-
