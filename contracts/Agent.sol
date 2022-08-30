@@ -7,7 +7,7 @@ struct Call {
 }
 
 contract Agent {
-    function run(Call[] calldata calls) external {
+    function main(Call[] calldata calls) external {
         for (uint256 i = 0; i < calls.length; i++) {
             (bool success, ) = calls[i].to.call(calls[i].callData);
             if (success) {
