@@ -1,7 +1,7 @@
 {
   "name": "pwnednomore-solidity",
   "description": "Smart contracts from PwnedNoMore",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PwnedNoMore/pwnednomore-contracts.git"
