@@ -4,13 +4,14 @@ pragma solidity >=0.6.0 <0.9.0;
 import "./console.sol";
 import "./console2.sol";
 import "./StdJson.sol";
+import "./VmEx.sol";
 
 abstract contract Script {
     bool public IS_SCRIPT = true;
     address constant private VM_ADDRESS =
         address(bytes20(uint160(uint256(keccak256('hevm cheat code')))));
 
-    Vm public constant vm = Vm(VM_ADDRESS);
+    VmEx public constant vm = VmEx(VM_ADDRESS);
 
     /// @dev Compute the address a contract will be deployed at for a given deployer address and nonce
     /// @notice adapated from Solmate implementation (https://github.com/transmissions11/solmate/blob/main/src/utils/LibRLP.sol)

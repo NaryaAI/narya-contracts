@@ -6,7 +6,7 @@ import "./Script.sol";
 import "./ds-test/test.sol";
 
 // Wrappers around Cheatcodes to avoid footguns
-abstract contract Test is DSTest, Script {
+abstract contract Test is DSTest, Script, ScriptEx {
     using stdStorage for StdStorage;
 
     uint256 internal constant UINT256_MAX =
