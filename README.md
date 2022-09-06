@@ -98,12 +98,22 @@ Because there could be multiple definitions of mapping, we only provide basic ab
 
 Combining with `readIntBySlot | readInt8BySlot | readUintBySlot | readUint8BySlot`, we can get mapping value.
 
-For Embedding mapping, for example: `mapping(uint, mapping(uint, uint)) embed`
+More complicated, `Embedding mapping`, for example: 
+
+> Here is a embedding mapping `mapping(uint, mapping(uint, uint)) embed`.
+> 
+> Our target is to read value of `embed[123][address(0x79)]`:
+
 ```solidity
-uint slot1 = mapKeyUint256SlotByName(address(dummy), "map256", 123);
+// get slot index of internal mapping `mapping(uint, uint)` <=> embed[123]
+uint slot1 = mapKeyUint256SlotByName(address(dummy), "embed", 123);
+// get slot index of target value <=> embed[123][address(0x79)]
 uint slot2 = mapKeyUint256SlotBySlot(address(dummy), slot1, address(0x79));
+// get slot value be slot index
 uint result = vm.readUintBySlot(address(dummy), slot2)
 ```
+
+`result` is value of `embed[123][address(0x79)]`.
 
 ### Example
 Example target contract is:
@@ -180,7 +190,7 @@ contract TestPrivDummy is Agent {
 | int8 | readInt8 / readInt8ArrayElem / readInt8Array |
 
 ## TODO
-* [ ] Support more integer type (16 / 32 / 48 / 64, etc.)
+* [ ] Support more integer types (16 / 32 / 48 / 64, etc.)
 * [ ] adapt with a better local testing tool
 
 ## Reference
