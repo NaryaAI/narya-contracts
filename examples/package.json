@@ -1,0 +1,9 @@
+{
+  "name": "pnm-test-examples",
+  "version": "1.0.0",
+  "author": "PwnedNoMore",
+  "license": "MIT",
+  "dependencies": {
+    "@pwnednomore/contracts": "1.0.7"
+  }
+}
