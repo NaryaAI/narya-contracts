@@ -13,6 +13,7 @@ interface VmEx is Vm {
     function readInt8(address target, string calldata varName) external view returns (int8);
     // read int8 variable by slot index and offset
     function readInt8BySlot(address target, uint256 index, uint256 offset) external view returns (int8);
+
     // read uint256 variable by name
     function readUint(address target, string calldata varName) external view returns (uint256);
     // read uint8 variable by slot index
@@ -22,8 +23,13 @@ interface VmEx is Vm {
     // read uint8 by slot index and offset
     function readUint8BySlot(address target, uint256 index, uint256 offset) external view returns (uint8);
 
+    // read address variable by name
+    function readAddress(address target, string calldata varName) external view returns (address);
+    // read address by slot index and offset
+    function readAddressBySlot(address target, uint256 index, uint256 offset) external view returns (address);
+
     // read raw `size` bytes by slot index and slot offset
-    function readRawBytes(address target, uint256 slot, uint256 offset, uint256 size) external view returns (bytes memory);
+    function readRawBytes(address target, uint256 index, uint256 offset, uint256 size) external view returns (bytes memory);
     // read `size` bytes by variable name
     function readBytes(address target, string calldata varName, uint256 size) external view returns (bytes memory);
 
