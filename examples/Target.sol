@@ -2,23 +2,28 @@
 pragma solidity ^0.8.0;
 
 interface IMalware {
-    function world() external;
+    function hello() external;
 }
 
 contract Target {
     bool public open_door = false;
     bool public stolen = false;
+    string public color = "white";
 
     constructor() {}
 
-    function hello(address mal) public {
+    function open(address mal) public {
         open_door = true;
-        IMalware(mal).world();
+        IMalware(mal).hello();
         open_door = false;
     }
 
     function backdoor() public {
         require(open_door, "");
         stolen = true;
+    }
+
+    function paint(string memory new_color) public {
+        color = new_color;
     }
 }
