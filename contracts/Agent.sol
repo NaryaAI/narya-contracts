@@ -15,33 +15,14 @@ contract Agent is Test {
     bytes4 internal constant FALLBACK = bytes4(0x00000000);
     bytes4 internal constant ON_ERC721_RECEIVED = bytes4(0x150b7a02);
 
-    function main(Call[] calldata calls, bytes calldata check) external {
+    function main(Call[] calldata calls, bytes calldata invariantCalldata) external {
         uint256 i;
         for (i = 0; i < calls.length; i++) {
             (bool succ, ) = calls[i].to.call(calls[i].callData);
             if (succ) {
-                (bool success, bytes memory result) = address(this).call(check);
-
-                if (!success) {
-                    if (result.length < 68) revert();
-                    assembly {
-                        result := add(result, 0x04)
-                    }
-                    revert(abi.decode(result, (string)));
-                }
+                _test_invariant(invariantCalldata);
             } else {
                 emit RevertedCall(MAIN, i);
-                return;
-            }
-        }
-    }
-
-    function _callback(bytes4 selector, Call[] calldata calls) internal {
-        uint256 i;
-        for (i = 0; i < calls.length; i++) {
-            (bool success, ) = calls[i].to.call(calls[i].callData);
-            if (!success) {
-                emit RevertedCall(selector, i);
                 return;
             }
         }
@@ -58,5 +39,28 @@ contract Agent is Test {
 
     function callback(bytes4 selector, Call[] calldata calls) external {
         _callback(selector, calls);
+    }
+
+    function _test_invariant(bytes calldata callData) internal {
+        (bool success, bytes memory result) = address(this).call(callData);
+
+        if (!success) {
+            if (result.length < 68) revert();
+            assembly {
+                result := add(result, 0x04)
+            }
+            revert(abi.decode(result, (string)));
+        }
+    }
+
+    function _callback(bytes4 selector, Call[] calldata calls) internal {
+        uint256 i;
+        for (i = 0; i < calls.length; i++) {
+            (bool success, ) = calls[i].to.call(calls[i].callData);
+            if (!success) {
+                emit RevertedCall(selector, i);
+                return;
+            }
+        }
     }
 }
