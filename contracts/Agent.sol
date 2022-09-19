@@ -15,12 +15,20 @@ contract Agent is Test {
     bytes4 internal constant FALLBACK = bytes4(0x00000000);
     bytes4 internal constant ON_ERC721_RECEIVED = bytes4(0x150b7a02);
 
-    function main(Call[] calldata calls) external {
+    function main(Call[] calldata calls, bytes calldata check) external {
         uint256 i;
         for (i = 0; i < calls.length; i++) {
-            (bool success, ) = calls[i].to.call(calls[i].callData);
-            if (success) {
-                this.check();
+            (bool succ, ) = calls[i].to.call(calls[i].callData);
+            if (succ) {
+                (bool success, bytes memory result) = address(this).call(check);
+
+                if (!success) {
+                    if (result.length < 68) revert();
+                    assembly {
+                        result := add(result, 0x04)
+                    }
+                    revert(abi.decode(result, (string)));
+                }
             } else {
                 emit RevertedCall(MAIN, i);
                 return;
@@ -51,6 +59,4 @@ contract Agent is Test {
     function callback(bytes4 selector, Call[] calldata calls) external {
         _callback(selector, calls);
     }
-
-    function check() external virtual {}
 }
