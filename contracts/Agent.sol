@@ -15,12 +15,14 @@ contract Agent is Test {
     bytes4 internal constant FALLBACK = bytes4(0x00000000);
     bytes4 internal constant ON_ERC721_RECEIVED = bytes4(0x150b7a02);
 
-    function main(Call[] calldata calls, bytes calldata invariantCalldata) external {
+    bytes internal invariantCalldata;
+
+    function main(Call[] calldata calls) external {
         uint256 i;
         for (i = 0; i < calls.length; i++) {
             (bool succ, ) = calls[i].to.call(calls[i].callData);
             if (succ) {
-                _test_invariant(invariantCalldata);
+                _testInvariant();
             } else {
                 emit RevertedCall(MAIN, i);
                 return;
@@ -41,8 +43,12 @@ contract Agent is Test {
         _callback(selector, calls);
     }
 
-    function _test_invariant(bytes calldata callData) internal {
-        (bool success, bytes memory result) = address(this).call(callData);
+    function setInvariant(bytes calldata _invariantCalldata) external {
+        invariantCalldata = _invariantCalldata;
+    }
+
+    function _testInvariant() internal {
+        (bool success, bytes memory result) = address(this).call(invariantCalldata);
 
         if (!success) {
             if (result.length < 68) revert();
