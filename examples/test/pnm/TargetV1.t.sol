@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@pwnednomore/contracts/Agent.sol";
 import "contracts/Target.sol";
 
-contract TestDoor is Agent {
+contract TargetTest is Agent {
     Target target;
 
     function setUp() public {
