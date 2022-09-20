@@ -5,6 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "@openzeppelin/contracts": "^4.7.3",
-    "@pwnednomore/contracts": "../contracts/"
+    "@pwnednomore/contracts": "../contracts/",
+    "hardhat": "^2.11.2"
   }
 }

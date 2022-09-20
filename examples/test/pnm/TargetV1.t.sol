@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "hardhat/console.sol";
 import "@pwnednomore/contracts/Agent.sol";
 import "contracts/Target.sol";
 
@@ -13,5 +14,6 @@ contract TargetTest is Agent {
 
     function test() external {
         require(!target.stolen(), "stolen");
+        console.log("Test success");
     }
 }
