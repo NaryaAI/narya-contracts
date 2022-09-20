@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@pwnednomore/contracts/Agent.sol";
-import "./Target.sol";
+import "contracts/Target.sol";
 
 contract TestDoor is Agent {
     Target target;
@@ -11,7 +11,7 @@ contract TestDoor is Agent {
         target = new Target();
     }
 
-    function check() external view override {
+    function test() external {
         require(!target.stolen(), "stolen");
     }
 }

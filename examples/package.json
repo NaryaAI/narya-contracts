@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "author": "PwnedNoMore",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
+    "@openzeppelin/contracts": "^4.7.3",
     "@pwnednomore/contracts": "../contracts/"
   }
 }

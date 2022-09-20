@@ -3,3 +3,5 @@
 yarn*.log
 
 node_modules/
+cache/
+out/

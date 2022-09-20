@@ -6,20 +6,20 @@ interface IMalware {
 }
 
 contract Target {
-    bool public open_door = false;
+    bool public is_open = false;
     bool public stolen = false;
     string public color = "white";
 
     constructor() {}
 
     function open(address mal) public {
-        open_door = true;
+        is_open = true;
         IMalware(mal).hello();
-        open_door = false;
+        is_open = false;
     }
 
     function backdoor() public {
-        require(open_door, "");
+        require(is_open, "");
         stolen = true;
     }
 
