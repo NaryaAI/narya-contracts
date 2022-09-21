@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "hardhat/console.sol";
 import "@pwnednomore/contracts/Agent.sol";
-import "contracts/Target.sol";
+// Notice that Target contract uses hardhat console
+// which is conflict with our Agent contract's console.
+// So we need to explicitly import symbol here to
+// avoid importing two console contracts to the global namespace.
+import {Target} from "contracts/Target.sol";
 
 contract TargetTest is Agent {
     Target target;

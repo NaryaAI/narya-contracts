@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@pwnednomore/contracts/FuzzIntegrationTest.sol";
-import "contracts/Target.sol";
+import {Target} from "contracts/Target.sol";
 
 // A fuzz integration test runs in following patterns:
 // 1. testContract.setup()

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@pwnednomore/contracts/FuzzParameterTest.sol";
-import "contracts/Target.sol";
+import {Target} from "contracts/Target.sol";
 
 contract TargetParameterTest is FuzzParameterTest {
     address user;

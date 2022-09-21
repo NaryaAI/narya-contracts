@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "hardhat/console.sol";
+
 interface IMalware {
     function hello() external;
 }
@@ -16,6 +18,7 @@ contract Target {
         is_open = true;
         IMalware(mal).hello();
         is_open = false;
+        console.log("Prod console log");
     }
 
     function backdoor() public {
