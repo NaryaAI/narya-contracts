@@ -2,13 +2,15 @@
 pragma solidity ^0.8.0;
 
 import "./forge-std/Test.sol";
+import "./forge-std/Vm.sol";
+import "./VmEx.sol";
 
 struct Call {
     address to;
     bytes callData;
 }
 
-contract Agent is Test {
+contract Agent is Test, ScriptEx {
     event RevertedCall(bytes4 selector, uint256 index);
 
     bytes4 internal constant MAIN = bytes4(0x41414141);
@@ -33,7 +35,7 @@ contract Agent is Test {
     function onERC721Received(Call[] calldata calls) external returns (bytes4) {
         _callback(ON_ERC721_RECEIVED, calls);
         return ON_ERC721_RECEIVED;
-    } 
+    }
 
     function fallback(Call[] calldata calls) external payable {
         _callback(FALLBACK, calls);

@@ -2,15 +2,15 @@
   "name": "@pwnednomore/contracts",
   "description": "Smart contracts from PwnedNoMore",
   "version": "1.0.12",
+  "license": "MIT",
+  "author": "PwnedNoMore",
+  "homepage": "https://pwnednomore.org",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PwnedNoMore/pwnednomore-contracts.git"
   },
-  "scripts": {},
-  "author": "PwnedNoMore",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/PwnedNoMore/pwnednomore-contracts/issues"
   },
-  "homepage": "https://pwnednomore.org"
+  "scripts": {}
 }

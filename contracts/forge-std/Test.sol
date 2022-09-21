@@ -6,13 +6,17 @@ import "./Script.sol";
 import "./ds-test/test.sol";
 
 // Wrappers around Cheatcodes to avoid footguns
-abstract contract Test is DSTest, Script, ScriptEx {
+abstract contract Test is DSTest, Script {
     using stdStorage for StdStorage;
 
     uint256 internal constant UINT256_MAX =
         115792089237316195423570985008687907853269984665640564039457584007913129639935;
 
     StdStorage internal stdstore;
+
+    address constant private VM_ADDRESS =
+        address(bytes20(uint160(uint256(keccak256('hevm cheat code')))));
+    Vm private constant vm = Vm(VM_ADDRESS);
 
     /*//////////////////////////////////////////////////////////////////////////
                                     STD-LOGS
@@ -328,6 +332,10 @@ abstract contract Test is DSTest, Script, ScriptEx {
             emit log_named_string("Error", err);
             assertEq(a, b);
         }
+    }
+
+    function assertEqUint(uint256 a, uint256 b) internal {
+        assertEq(uint256(a), uint256(b));
     }
 
     function assertApproxEqAbs(
@@ -663,7 +671,7 @@ abstract contract Test is DSTest, Script, ScriptEx {
     }
 
     function rawToConvertedEIPTx1559s(RawTx1559[] memory rawTxs)
-        internal
+        internal pure
         returns (Tx1559[] memory)
     {
         Tx1559[] memory txs = new Tx1559[](rawTxs.length);
@@ -674,7 +682,7 @@ abstract contract Test is DSTest, Script, ScriptEx {
     }
 
     function rawToConvertedEIPTx1559(RawTx1559 memory rawTx)
-        internal
+        internal pure
         returns (Tx1559 memory)
     {
         Tx1559 memory transaction;
@@ -684,10 +692,11 @@ abstract contract Test is DSTest, Script, ScriptEx {
         transaction.hash= rawTx.hash;
         transaction.txDetail = rawToConvertedEIP1559Detail(rawTx.txDetail);
         transaction.opcode= rawTx.opcode;
+        return transaction;
     }
 
     function rawToConvertedEIP1559Detail(RawTx1559Detail memory rawDetail)
-        internal
+        internal pure
         returns (Tx1559Detail memory)
     {
         Tx1559Detail memory txDetail;
@@ -751,7 +760,7 @@ abstract contract Test is DSTest, Script, ScriptEx {
     }
 
     function rawToConvertedReceipts(RawReceipt[] memory rawReceipts)
-        internal
+        internal pure
         returns(Receipt[] memory)
     {
         Receipt[] memory receipts = new Receipt[](rawReceipts.length);
@@ -762,7 +771,7 @@ abstract contract Test is DSTest, Script, ScriptEx {
     }
 
     function rawToConvertedReceipt(RawReceipt memory rawReceipt)
-        internal
+        internal pure
         returns(Receipt memory)
     {
         Receipt memory receipt;
@@ -783,7 +792,7 @@ abstract contract Test is DSTest, Script, ScriptEx {
     }
 
     function rawToConvertedReceiptLogs(RawReceiptLog[] memory rawLogs)
-        internal
+        internal pure
         returns (ReceiptLog[] memory)
     {
         ReceiptLog[] memory logs = new ReceiptLog[](rawLogs.length);

@@ -4,14 +4,13 @@ pragma solidity >=0.6.0 <0.9.0;
 import "./console.sol";
 import "./console2.sol";
 import "./StdJson.sol";
-import "./VmEx.sol";
 
 abstract contract Script {
     bool public IS_SCRIPT = true;
     address constant private VM_ADDRESS =
         address(bytes20(uint160(uint256(keccak256('hevm cheat code')))));
 
-    VmEx public constant vm = VmEx(VM_ADDRESS);
+    Vm private constant vm = Vm(VM_ADDRESS);
 
     /// @dev Compute the address a contract will be deployed at for a given deployer address and nonce
     /// @notice adapated from Solmate implementation (https://github.com/transmissions11/solmate/blob/main/src/utils/LibRLP.sol)
@@ -36,5 +35,10 @@ abstract contract Script {
 
     function addressFromLast20Bytes(bytes32 bytesValue) internal pure returns (address) {
         return address(uint160(uint256(bytesValue)));
+    }
+
+    function deriveRememberKey(string memory mnemonic, uint32 index) internal returns (address who, uint256 privateKey) {
+        privateKey = vm.deriveKey(mnemonic, index);
+        who = vm.rememberKey(privateKey);
     }
 }
