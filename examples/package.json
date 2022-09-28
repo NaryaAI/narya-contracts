@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "author": "PwnedNoMore",
   "license": "MIT",
+  "scripts": {
+    "build:forge": "forge build",
+    "build:hardhat": "hardhat compile",
+    "build": "yarn build:forge && yarn build:hardhat",
+    "test": "forge test"
+  },
   "devDependencies": {
     "@ethersproject/abi": "^5.4.7",
     "@ethersproject/providers": "^5.4.7",

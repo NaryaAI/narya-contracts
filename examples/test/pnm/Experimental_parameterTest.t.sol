@@ -19,6 +19,6 @@ contract TargetParameterTest is FuzzParameterTest {
     // This function will be called again and again, with intellegently selected random data
     function test_paintColorAgainAndAgain(string memory color) external {
         target.paint(color);
-        require(!target.stolen(), "TestReport: Door is stolen!");
+        assert(!target.stolen());
     }
 }

@@ -9,14 +9,14 @@ pragma solidity ^0.8.0;
 import "@pwnednomore/contracts/Agent.sol";
 import "src/Target.sol";
 
-contract TargetTest is Agent {
+contract BasicTest is Agent {
     Target target;
 
     function setUp() public {
         target = new Target();
     }
 
-    function test() external {
+    function invariant() external {
         require(!target.stolen(), "stolen");
         console.log("Test success");
     }

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@pwnednomore/contracts/FuzzIntegrationTest.sol";
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {FuzzIntegrationTest} from "@pwnednomore/contracts/FuzzIntegrationTest.sol";
 import {Target} from "src/Target.sol";
 
 // A fuzz integration test runs in following patterns:
@@ -32,20 +32,20 @@ contract TargetIntegrationTest is FuzzIntegrationTest {
     }
 
     // This is the verification method, which is called after every random actions
-    function test_doorIsAlwaysSafe() external {
+    function invariant_doorIsAlwaysSafe() external {
         require(!target.stolen(), "TestReport: Door is stolen!");
     }
 
     // You could define multiple test methods in one test suite,
     // but only one will be used for a single run
-    function test_anotherTest() external {
+    function invariant_anotherTest() external {
         require(!target.is_open(), "This test is not used");
     }
 
     // If any these functions accept parameters, we will feed in intellegently selected random data
     // For more structured data, you could write your own factory util functions
-    function test_doorCanAlwaysBePaint(string memory color) external {
-        target.paint(color);
-        require(keccak256(bytes(target.color())) == keccak256(bytes(color)), "TestReport: Door paint failed!");
-    }
+    // function test_doorCanAlwaysBePaint(string memory color) external {
+    //     target.paint(color);
+    //     require(keccak256(bytes(target.color())) == keccak256(bytes(color)), "TestReport: Door paint failed!");
+    // }
 }
