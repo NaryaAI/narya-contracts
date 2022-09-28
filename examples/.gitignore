@@ -1,0 +1,10 @@
+# Hardhat version
+/node_modules
+/cache
+/artifacts
+/typechain
+/typechain-types
+
+# Foundry version
+/cache
+/out
