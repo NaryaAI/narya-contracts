@@ -5,21 +5,24 @@ import "@pwnednomore/contracts/Agent.sol";
 import "src/Token.sol";
 
 contract ERC20BalanceTest is Agent {
-    address alice;
     address owner;
+    address user;
     Token token;
 
     function setUp() public {
         owner = address(0x1);
-        alice = address(0x927);
+        user = address(0x927);
 
-        vm.startPrank(owner);
+        vm.asAccountBegin(owner);
         token = new Token();
-        token.transfer(alice, 50);
-        vm.stopPrank();
+        token.transfer(user, 50);
+        vm.asAccountEnd();
     }
 
-    function invariantBalance() public view {
-        assert(token.balanceOf(alice) == 50);
+    function invariantBalanceShouldNotChange() public view {
+        // User fund should be safe
+        assert(token.balanceOf(user) == 50);
+        // Hacker should not gain any fund in any way
+        assert(token.balanceOf(address(this)) == 0);
     }
 }

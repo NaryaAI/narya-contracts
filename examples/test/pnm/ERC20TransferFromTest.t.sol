@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
@@ -20,10 +19,10 @@ contract ERC20TransferFromTest is Agent {
         token.approve(address(this), 20);
     }
 
-    function testTransferFrom(uint amount) public {
-        uint aliceBalance = token.balanceOf(alice);
-        uint agentBalance = token.balanceOf(address(this));
-        uint allowance = token.allowance(alice, address(this));
+    function testTransferFrom(uint256 amount) public {
+        uint256 aliceBalance = token.balanceOf(alice);
+        uint256 agentBalance = token.balanceOf(address(this));
+        uint256 allowance = token.allowance(alice, address(this));
 
         token.transferFrom(alice, address(this), amount);
 

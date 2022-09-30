@@ -7,7 +7,7 @@ import "src/Vault.sol";
 
 contract ERC4626RedeemTest is Agent {
     address alice = address(0x927);
-    uint amount = 1;
+    uint256 amount = 1;
     Vault vault;
 
     function setUp() public {
