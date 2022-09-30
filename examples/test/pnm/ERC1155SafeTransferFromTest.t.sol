@@ -2,9 +2,11 @@
 pragma solidity ^0.8.9;
 
 import "@pwnednomore/contracts/Agent.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "src/GameItems.sol";
+import {console} from "@pwnednomore/contracts/forge-std/console.sol";
 
-contract ERC1155SafeTransferFromTest is Agent {
+contract ERC1155SafeTransferFromTest is Agent, IERC1155Receiver {
     address alice = address(0x927);
     GameItems gameItems;
     uint256 initAmount = 50;
@@ -24,10 +26,14 @@ contract ERC1155SafeTransferFromTest is Agent {
     }
 
     function testSafeTransferFrom(
-        bool approved,
-        GameItems.Item item,
+        // bool approved, // add it back in PNM engine.
+        // GameItems.Item item, // add it back in PNM engine.
         uint256 amount
     ) public {
+        vm.assume(amount <= initAmount && amount > 0); // remove this in PNM engine.
+        bool approved = true; // remove this in PNM engine.
+        GameItems.Item item = GameItems.Item.GOLD; // remove this in PNM engine.
+
         uint256 id = uint256(item);
         uint256 aliceBalance = gameItems.balanceOf(alice, id);
         uint256 agentBalance = gameItems.balanceOf(address(this), id);
@@ -45,5 +51,30 @@ contract ERC1155SafeTransferFromTest is Agent {
         );
         assert(gameItems.balanceOf(alice, id) == aliceBalance - amount);
         assert(gameItems.balanceOf(address(this), id) == agentBalance + amount);
+    }
+
+    /// @dev ERC1155Receiver interfaces
+    function onERC1155Received(
+        address operator, 
+        address from, 
+        uint256 id, 
+        uint256 value, 
+        bytes memory data
+    ) external override returns (bytes4){
+        return this.onERC1155Received.selector;
+    }
+
+    function onERC1155BatchReceived(
+        address operator, 
+        address from, 
+        uint256[] memory ids, 
+        uint256[] memory values, 
+        bytes memory data
+    ) external override returns (bytes4) {
+        return this.onERC1155BatchReceived.selector;
+    }
+
+    function supportsInterface(bytes4 interfaceId) external view returns (bool) {
+        return interfaceId == type(IERC1155Receiver).interfaceId;
     }
 }

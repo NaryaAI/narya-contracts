@@ -20,7 +20,7 @@ contract ERC20TransferTest is Agent {
     }
 
     function testTransfer(uint256 amount) public {
-        vm.assume(amount <= 51); // remove this in PNM engine.
+        vm.assume(amount <= 50); // remove this in PNM engine.
 
         address receiver = address(0x928);
         uint256 userBalance = token.balanceOf(user);
