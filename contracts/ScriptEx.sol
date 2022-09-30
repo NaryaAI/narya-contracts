@@ -9,6 +9,26 @@ abstract contract ScriptEx {
 
     VmEx public constant vm = VmEx(VM_ADDRESS);
 
+    // Sets the *next* call's msg.sender to be the input address
+    function asAccountForNextCall(address addr) public {
+        vm.prank(addr);
+    }
+    // Sets the *next* call's msg.sender to be the input address, and the tx.origin to be the second input
+    function asAccountForNextCall(address addr, address origin) public {
+        vm.prank(addr, origin);
+    }
+    // Sets all subsequent calls' msg.sender to be the input address until `stopPrank` is called
+    function asAccountBegin(address addr) public {
+        vm.startPrank(addr);
+    }
+    function asAccountBegin(address addr, address origin) public {
+        vm.startPrank(addr, origin);
+    }
+    // Resets subsequent calls' msg.sender to be `address(this)`
+    function asAccountEnd() public {
+        vm.stopPrank();
+    }
+
     // for mapping(uint256 => xx), get slot index of value by map variable name
     function mapKeyUint256SlotByName(address who, string memory mapName, uint256 key) internal view returns (uint256) {
         uint256 mapSlot = vm.getVarSlotIndex(who, mapName);
