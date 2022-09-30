@@ -34,7 +34,7 @@ contract ERC1155SafeTransferFromTest is Agent {
         gameItems.safeTransferFrom(alice, address(this), id, amount, "");
 
         assert(approved);
-        assert(amount <= initAmount);
+        assert(amount <= initAmount && amount <= aliceBalance);
         assert(id == unit(GameItems.GOLD) || id == uint(GameItems.SILVER));
         assert(gameItems.balanceOf(alice, id) == aliceBalance - amount);
         assert(gameItems.balanceOf(address(this), id) == agentBalance + amount);
