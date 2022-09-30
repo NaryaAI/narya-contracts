@@ -14,7 +14,7 @@ yarn install
 yarn hardhat compile
 
 # As Forge repo
-git submodule init
+git submodule update --init
 forge build
 ```
 
