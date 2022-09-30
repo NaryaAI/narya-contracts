@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {FuzzIntegrationTest} from "@pwnednomore/contracts/FuzzIntegrationTest.sol";
-import {Target} from "src/Target.sol";
+import {VulnerableDoor} from "src/VulnerableDoor.sol";
 
 // A fuzz integration test runs in following patterns:
 // 1. testContract.setup()
@@ -13,12 +13,12 @@ import {Target} from "src/Target.sol";
 contract TargetIntegrationTest is FuzzIntegrationTest {
     address user;
     ERC20 usdc_contract;
-    Target target;
+    VulnerableDoor target;
 
     function setUp() public {
         user = 0x0000000000111111111100000000001111111111;
         usdc_contract = new ERC20("USDC", "USDC");
-        target = new Target();
+        target = new VulnerableDoor();
     }
 
     // This function will be called randomly along with other methods in the target contract
@@ -28,24 +28,24 @@ contract TargetIntegrationTest is FuzzIntegrationTest {
       vm.stopPrank();
 
       // Optional verifying
-      assert(target.is_open(), "TestReport: Door should be open after user opens it");
+      assert(target.is_open());
     }
 
     // This is the verification method, which is called after every random actions
     function invariantDoorIsAlwaysSafe() external {
-        assert(!target.stolen(), "TestReport: Door is stolen!");
+        assert(!target.stolen());
     }
 
     // You could define multiple test methods in one test suite,
     // but only one will be used for a single run
     function invariantYetAnotherTest() external {
-        assert(!target.is_open(), "This test is not used");
+        assert(!target.is_open());
     }
 
     // If any these functions accept parameters, we will feed in intellegently selected random data
     // For more structured data, you could write your own factory util functions
     // function test_doorCanAlwaysBePaint(string memory color) external {
     //     target.paint(color);
-    //     require(keccak256(bytes(target.color())) == keccak256(bytes(color)), "TestReport: Door paint failed!");
+    //     require(keccak256(bytes(target.color())) == keccak256(bytes(color)));
     // }
 }

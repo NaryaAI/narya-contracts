@@ -7,7 +7,7 @@ interface IMalware {
     function hello() external;
 }
 
-contract Target {
+contract VulnerableDoor {
     bool public is_open = false;
     bool public stolen = false;
     string public color = "white";

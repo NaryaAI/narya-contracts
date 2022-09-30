@@ -7,13 +7,13 @@ pragma solidity ^0.8.0;
 // 1. Use our console version everywhere
 // 2. Use explicit symbol import here like `import {Symbol} from "contract";`
 import "@pwnednomore/contracts/Agent.sol";
-import {Target} from "src/Target.sol";
+import {VulnerableDoor} from "src/VulnerableDoor.sol";
 
 contract BasicTest is Agent {
-    Target target;
+    VulnerableDoor target;
 
     function setUp() public {
-        target = new Target();
+        target = new VulnerableDoor();
     }
 
     function invariant() external {
