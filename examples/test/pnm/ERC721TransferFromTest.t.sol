@@ -4,7 +4,7 @@ pragma solidity ^0.8.9;
 import "@pwnednomore/contracts/Agent.sol";
 import "src/PFP.sol";
 
-contract ERC721SafeTransferFromTest is Agent {
+contract ERC721TransferFromTest is Agent {
     address alice = address(0x927);
     PFP pfp;
     uint256 id1;
@@ -22,8 +22,10 @@ contract ERC721SafeTransferFromTest is Agent {
         pfp.approve(address(this), id2);
     }
 
-    function testSafeTransferFrom(uint256 id) public {
-        pfp.safeTransferFrom(alice, address(this), id);
+    function testTransferFrom(uint256 id) public {
+        vm.assume(id == id2); // remove this for PNM engine
+
+        pfp.transferFrom(alice, address(this), id);
         assert(id == id2);
         assert(pfp.ownerOf(id) == address(this));
     }
