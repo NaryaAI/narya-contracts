@@ -1,6 +1,6 @@
 [submodule "examples/lib/pwnednomore-contracts"]
 	path = examples/lib/pwnednomore-contracts
-	url = ./contracts
+	url = ./
 [submodule "examples/lib/openzeppelin-contracts"]
 	path = examples/lib/openzeppelin-contracts
 	url = https://github.com/openzeppelin/openzeppelin-contracts
