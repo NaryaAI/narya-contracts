@@ -20,6 +20,8 @@ contract ERC20TransferFromTest is Agent {
     }
 
     function testTransferFrom(uint256 amount) public {
+        vm.assume(amount <= 20); // remove this in PNM engine.
+
         uint256 aliceBalance = token.balanceOf(alice);
         uint256 agentBalance = token.balanceOf(address(this));
         uint256 allowance = token.allowance(alice, address(this));

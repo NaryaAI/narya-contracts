@@ -23,7 +23,7 @@ contract ERC721TransferFromTest is Agent {
     }
 
     function testTransferFrom(uint256 id) public {
-        vm.assume(id == id2); // remove this for PNM engine
+        vm.assume(id == id2); // remove this in PNM engine.
 
         pfp.transferFrom(alice, address(this), id);
         assert(id == id2);
