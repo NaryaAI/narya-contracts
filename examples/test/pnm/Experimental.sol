@@ -22,24 +22,24 @@ contract TargetIntegrationTest is FuzzIntegrationTest {
     }
 
     // This function will be called randomly along with other methods in the target contract
-    function action_asUser_openDoor() external {
+    function actionAsUserAndOpenDoor() external {
       vm.startPrank(user);
       target.open(address(usdc_contract));
       vm.stopPrank();
 
       // Optional verifying
-      require(target.is_open(), "TestReport: Door should be open after user opens it");
+      assert(target.is_open(), "TestReport: Door should be open after user opens it");
     }
 
     // This is the verification method, which is called after every random actions
-    function invariant_doorIsAlwaysSafe() external {
-        require(!target.stolen(), "TestReport: Door is stolen!");
+    function invariantDoorIsAlwaysSafe() external {
+        assert(!target.stolen(), "TestReport: Door is stolen!");
     }
 
     // You could define multiple test methods in one test suite,
     // but only one will be used for a single run
-    function invariant_anotherTest() external {
-        require(!target.is_open(), "This test is not used");
+    function invariantYetAnotherTest() external {
+        assert(!target.is_open(), "This test is not used");
     }
 
     // If any these functions accept parameters, we will feed in intellegently selected random data
