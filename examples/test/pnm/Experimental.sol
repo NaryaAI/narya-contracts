@@ -10,7 +10,7 @@ import {VulnerableDoor} from "src/VulnerableDoor.sol";
 // 2. Call a random function in target contract, or a random `action_XXX` function in this test contract
 // 3. testContract.test_XXX(), which is specified when this test runs
 // 4. Goto step 2
-contract TargetIntegrationTest is FuzzIntegrationTest {
+contract BasicIntegrationTest is FuzzIntegrationTest {
     address user;
     ERC20 usdc_contract;
     VulnerableDoor target;
