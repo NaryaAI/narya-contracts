@@ -14,7 +14,7 @@ contract ERC4626RedeemTest is Agent {
         address owner = address(0x1);
         vm.startPrank(owner);
         Token token = new Token();
-        vault = new Vault();
+        vault = new Vault(token);
         token.transfer(alice, 50);
         vm.stopPrank();
 
@@ -22,7 +22,7 @@ contract ERC4626RedeemTest is Agent {
         vault.mint(1, alice);
     }
 
-    function invariantRedeem() public view {
+    function invariantRedeem() external {
         assert(vault.maxRedeem(alice) == amount);
         vault.redeem(amount, alice, alice);
         assert(vault.maxRedeem(alice) == 0);
