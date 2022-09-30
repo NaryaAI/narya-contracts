@@ -16,14 +16,15 @@ contract ERC1155SafeTransferFromTest is Agent {
         gameItems.safeBatchTransferFrom(
             owner, 
             alice, 
-            [GameItems.GOLD, GameItems.SILVER], 
+            [GameItems.Item.GOLD, GameItems.Item.SILVER], 
             [initAmount, initAmount], 
             ""
         );
         vm.stopPrank();
     }
 
-    function testSafeTransferFrom(bool approved, uint id, uint amount) public {
+    function testSafeTransferFrom(bool approved, GameItems.Item item, uint amount) public {
+        uint id = uint(item);
         uint aliceBalance = gameItems.balanceOf(alice, id);
         uint agentBalance = gameItems.balanceOf(address(this), id);
 
@@ -34,7 +35,7 @@ contract ERC1155SafeTransferFromTest is Agent {
 
         assert(approved);
         assert(amount <= initAmount);
-        assert(id == GameItems.GOLD || id == GameItems.SILVER);
+        assert(id == unit(GameItems.GOLD) || id == uint(GameItems.SILVER));
         assert(gameItems.balanceOf(alice, id) == aliceBalance - amount);
         assert(gameItems.balanceOf(address(this), id) == agentBalance + amount);
     }
