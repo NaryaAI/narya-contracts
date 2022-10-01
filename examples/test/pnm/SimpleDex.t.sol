@@ -19,6 +19,7 @@ contract SimpleDexTest is Agent {
         token = new Token();
         setNativeBalance(address(token), 10);
         target = new SimpleDex(address(token));
+        token.increaseAllowance(address(target), 10);
         target.init(10);
 
         // Give all roles 10ETH and 10Token
