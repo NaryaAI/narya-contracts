@@ -29,6 +29,11 @@ abstract contract ScriptEx {
         vm.stopPrank();
     }
 
+    // Change balance of the given address
+    function setNativeBalance(address account, uint256 amount) public {
+        vm.deal(account, amount);
+    }
+
     // for mapping(uint256 => xx), get slot index of value by map variable name
     function mapKeyUint256SlotByName(address who, string memory mapName, uint256 key) internal view returns (uint256) {
         uint256 mapSlot = vm.getVarSlotIndex(who, mapName);
