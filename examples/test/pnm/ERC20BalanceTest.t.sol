@@ -13,10 +13,10 @@ contract ERC20BalanceTest is Agent {
         owner = address(0x1);
         user = address(0x927);
 
-        vm.asAccountBegin(owner);
+        asAccountBegin(owner);
         token = new Token();
         token.transfer(user, 50);
-        vm.asAccountEnd();
+        asAccountEnd();
     }
 
     function invariantBalanceShouldNotChange() public view {

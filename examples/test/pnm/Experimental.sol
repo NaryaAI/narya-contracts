@@ -11,21 +11,23 @@ import {VulnerableDoor} from "src/VulnerableDoor.sol";
 // 3. testContract.test_XXX(), which is specified when this test runs
 // 4. Goto step 2
 contract BasicIntegrationTest is FuzzIntegrationTest {
-    address user;
+    address owner = address(0x1);
+    address user = address(0x37);
     ERC20 usdc_contract;
     VulnerableDoor target;
 
     function setUp() public {
-        user = 0x0000000000111111111100000000001111111111;
+        asAccountBegin(owner);
         usdc_contract = new ERC20("USDC", "USDC");
         target = new VulnerableDoor();
+        asAccountEnd();
     }
 
     // This function will be called randomly along with other methods in the target contract
     function actionAsUserAndOpenDoor() external {
-      vm.startPrank(user);
+      asAccountBegin(user);
       target.open(address(usdc_contract));
-      vm.stopPrank();
+      asAccountEnd();
 
       // Optional verifying
       assert(target.is_open());

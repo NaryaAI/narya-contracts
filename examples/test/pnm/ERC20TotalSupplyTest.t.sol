@@ -13,9 +13,9 @@ contract ERC20TotalSupplyTest is Agent {
     function setUp() public {
         owner = address(0x1);
 
-        vm.asAccountBegin(owner);
+        asAccountBegin(owner);
         token = new Token();
-        vm.asAccountEnd();
+        asAccountEnd();
 
         totalSupply = token.totalSupply();
     }

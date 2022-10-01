@@ -12,22 +12,23 @@ contract ERC721TransferFromTest is Agent {
 
     function setUp() public {
         address owner = address(0x1);
-        vm.startPrank(owner);
+
+        asAccountBegin(owner);
         pfp = new PFP();
         id1 = pfp.mint(alice, "https://pnm.xyz/1");
-        id2 = pfp.mint(alice, "https://pnm.xyz/2");
-        vm.stopPrank();
+        asAccountEnd();
 
-        vm.prank(alice);
+        asAccountForNextCall(alice);
         pfp.approve(address(this), id2);
     }
 
     function testTransferFrom(uint256 id) public {
-        vm.assume(id == id2); // remove this in PNM engine.
-
-        pfp.transferFrom(alice, address(this), id);
-        assert(id == id2);
-        assert(pfp.ownerOf(id) == address(this));
+        try pfp.transferFrom(alice, address(this), id) {
+            assert(id == id1);
+            assert(pfp.ownerOf(id1) == address(this));
+        } catch {
+            assert(pfp.ownerOf(id1) == alice);
+        }
     }
 
     function invariantSafeTransferFrom() public view {

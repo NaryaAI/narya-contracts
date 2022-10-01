@@ -12,13 +12,14 @@ contract ERC4626RedeemTest is Agent {
 
     function setUp() public {
         address owner = address(0x1);
-        vm.startPrank(owner);
+
+        asAccountBegin(owner);
         Token token = new Token();
         vault = new Vault(token);
         token.transfer(alice, 50);
-        vm.stopPrank();
+        asAccountEnd();
 
-        vm.prank(alice);
+        asAccountForNextCall(alice);
         vault.mint(1, alice);
     }
 

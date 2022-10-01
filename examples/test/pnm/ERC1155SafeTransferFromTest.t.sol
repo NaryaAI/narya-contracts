@@ -4,7 +4,6 @@ pragma solidity ^0.8.9;
 import "@pwnednomore/contracts/Agent.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "src/GameItems.sol";
-import {console} from "@pwnednomore/contracts/forge-std/console.sol";
 
 contract ERC1155SafeTransferFromTest is Agent, IERC1155Receiver {
     address alice = address(0x927);
@@ -13,7 +12,8 @@ contract ERC1155SafeTransferFromTest is Agent, IERC1155Receiver {
 
     function setUp() public {
         address owner = address(0x1);
-        vm.startPrank(owner);
+
+        asAccountBegin(owner);
         gameItems = new GameItems();
         uint256[] memory items = new uint256[](2);
         items[0] = uint256(GameItems.Item.GOLD);
@@ -22,7 +22,7 @@ contract ERC1155SafeTransferFromTest is Agent, IERC1155Receiver {
         amounts[0] = initAmount;
         amounts[1] = initAmount;
         gameItems.safeBatchTransferFrom(owner, alice, items, amounts, "");
-        vm.stopPrank();
+        asAccountEnd();
     }
 
     function testSafeTransferFrom(
@@ -38,7 +38,7 @@ contract ERC1155SafeTransferFromTest is Agent, IERC1155Receiver {
         uint256 aliceBalance = gameItems.balanceOf(alice, id);
         uint256 agentBalance = gameItems.balanceOf(address(this), id);
 
-        vm.prank(alice);
+        asAccountForNextCall(alice);
         gameItems.setApprovalForAll(address(this), approved);
 
         gameItems.safeTransferFrom(alice, address(this), id, amount, "");
@@ -55,20 +55,20 @@ contract ERC1155SafeTransferFromTest is Agent, IERC1155Receiver {
 
     /// @dev ERC1155Receiver interfaces
     function onERC1155Received(
-        address operator, 
-        address from, 
-        uint256 id, 
-        uint256 value, 
+        address operator,
+        address from,
+        uint256 id,
+        uint256 value,
         bytes memory data
     ) external override returns (bytes4){
         return this.onERC1155Received.selector;
     }
 
     function onERC1155BatchReceived(
-        address operator, 
-        address from, 
-        uint256[] memory ids, 
-        uint256[] memory values, 
+        address operator,
+        address from,
+        uint256[] memory ids,
+        uint256[] memory values,
         bytes memory data
     ) external override returns (bytes4) {
         return this.onERC1155BatchReceived.selector;

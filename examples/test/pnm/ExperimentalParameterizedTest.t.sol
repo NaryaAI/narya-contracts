@@ -5,11 +5,10 @@ import "@pwnednomore/contracts/FuzzParameterTest.sol";
 import {VulnerableDoor} from "src/VulnerableDoor.sol";
 
 contract ParameterizedTest is FuzzParameterTest {
-    address user;
+    address user = address(0x37);
     VulnerableDoor target;
 
     function setUp() public {
-        user = 0x0000000000111111111100000000001111111111;
         target = new VulnerableDoor();
 
         // Call this function is you want to discard state changes after each test
