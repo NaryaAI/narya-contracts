@@ -6,8 +6,8 @@ pragma solidity ^0.8.0;
 // You have two options:
 // 1. Use our console version everywhere
 // 2. Use explicit symbol import here like `import {Symbol} from "contract";`
-import "@pwnednomore/contracts/Agent.sol";
 import {VulnerableDoor} from "src/callback/VulnerableDoor.sol";
+import "@pwnednomore/contracts/Agent.sol";
 
 contract VulnerableDoorTest is Agent {
     VulnerableDoor target;

@@ -22,10 +22,10 @@ contract FlagUpgradeableTest is Agent {
     function testSetFlags(int256 x, int256 y) public {
         IUUPSUpgradeableMock(address(proxy)).set0(x);
         IUUPSUpgradeableMock(address(proxy)).set1(y);
-        require(IUUPSUpgradeableMock(address(proxy)).flag1());
+        assert(IUUPSUpgradeableMock(address(proxy)).flag1());
     }
 
     function invariantFlagIsTrue() public view {
-        require(IUUPSUpgradeableMock(address(proxy)).flag1());
+        assert(IUUPSUpgradeableMock(address(proxy)).flag1());
     }
 }

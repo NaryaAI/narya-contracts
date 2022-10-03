@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {FuzzIntegrationTest} from "@pwnednomore/contracts/FuzzIntegrationTest.sol";
-import {VulnerableDoor} from "src/VulnerableDoor.sol";
+import {VulnerableDoor} from "src/callback/VulnerableDoor.sol";
 
 // A fuzz integration test runs in following patterns:
 // 1. testContract.setup()
@@ -25,12 +25,12 @@ contract BasicIntegrationTest is FuzzIntegrationTest {
 
     // This function will be called randomly along with other methods in the target contract
     function actionAsUserAndOpenDoor() external {
-      asAccountBegin(user);
-      target.open(address(usdc_contract));
-      asAccountEnd();
+        asAccountBegin(user);
+        target.open(address(usdc_contract));
+        asAccountEnd();
 
-      // Optional verifying
-      assert(target.is_open());
+        // Optional verifying
+        assert(target.is_open());
     }
 
     // This is the verification method, which is called after every random actions

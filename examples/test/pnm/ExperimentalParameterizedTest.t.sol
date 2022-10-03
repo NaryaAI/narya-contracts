@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@pwnednomore/contracts/FuzzParameterTest.sol";
-import {VulnerableDoor} from "src/VulnerableDoor.sol";
+import {VulnerableDoor} from "src/callback/VulnerableDoor.sol";
 
 contract ParameterizedTest is FuzzParameterTest {
     address user = address(0x37);
