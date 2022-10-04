@@ -9,17 +9,14 @@ contract TestRunner is ScriptEx {
     event RevertedCall(bytes4 selector, uint256 index);
     bytes4 internal constant MAIN = bytes4(0xffffffff);
 
-    address test;
-    address agent;
+    address internal test;
+    address internal agent;
 
     bytes internal invariantCalldata;
 
-    constructor(address _test, address _agent) {
+    function setUp(address _test, address _agent) public {
         test = _test;
         agent = _agent;
-    }
-
-    function setUp() public {
         IPTest(test).setUp(agent);
     }
 
@@ -27,7 +24,7 @@ contract TestRunner is ScriptEx {
         invariantCalldata = _invariantCalldata;
     }
 
-    function testInvariant(Call[] calldata calls) public {
+    function agentCalls(Call[] calldata calls) public {
         uint256 i;
         for (i = 0; i < calls.length; i++) {
             vm.prank(agent);
@@ -43,14 +40,6 @@ contract TestRunner is ScriptEx {
                 emit RevertedCall(MAIN, i);
                 return;
             }
-        }
-    }
-
-    function testFunction(bytes calldata callData) public {
-        vm.prank(test);
-        (bool success, bytes memory result) = test.call(callData);
-        if (!success && isPanic(result)) {
-            revert();
         }
     }
 
