@@ -3,7 +3,6 @@ pragma solidity >=0.6.0 <0.9.0;
 
 import "./interfaces/IPTest.sol";
 import "./interfaces/IAgent.sol";
-import "./forge-std/Vm.sol";
 import "./ScriptEx.sol";
 
 contract TestRunner is ScriptEx {

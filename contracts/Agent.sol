@@ -1,17 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.9.0;
 
-import "./forge-std/Test.sol";
-import "./forge-std/Vm.sol";
+import "./interfaces/IAgent.sol";
 import "./ScriptEx.sol";
-import "./VmEx.sol";
 
-struct Call {
-    address to;
-    bytes callData;
-}
-
-contract Agent is Test, ScriptEx {
+contract Agent is ScriptEx {
     event RevertedCall(bytes4 selector, uint256 index);
 
     bytes4 internal constant FALLBACK = bytes4(0x00000000);
