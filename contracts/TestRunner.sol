@@ -24,7 +24,7 @@ contract TestRunner is ScriptEx {
         invariantCalldata = _invariantCalldata;
     }
 
-    function agentCalls(Call[] calldata calls) public {
+    function callAgent(Call[] calldata calls) public {
         uint256 i;
         for (i = 0; i < calls.length; i++) {
             vm.prank(agent);
