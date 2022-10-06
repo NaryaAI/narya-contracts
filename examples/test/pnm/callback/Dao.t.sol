@@ -25,6 +25,6 @@ contract DAOTest is Agent {
         // INVARAINT:
         // The vault should always have at least 1 ether.
         // Otherwise, user cannot get the fund back.
-        require(address(vault).balance >= 1 ether);
+        require(address(dao).balance >= 1 ether);
     }
 }
