@@ -1,20 +1,21 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@pwnednomore/contracts/Agent.sol";
+import "@pwnednomore/contracts/PTest.sol";
 import {SimpleDex} from "src/SimpleDex.sol";
 import {Token} from "src/Token.sol";
 
-contract SimpleDexTest is Agent {
-    address owner = address(0x1);
+contract SimpleDexTest is PTest {
     address lp = address(0x37);
     address user = address(0x38);
+    address agent;
 
     Token token;
     SimpleDex target;
 
-    function setUp() public {
-        asAccountBegin(owner);
+    function setUp(address _agent) public override {
+        agent = _agent;
+
         // Setup DEX with 10ETH and 10Token
         token = new Token();
         setNativeBalance(address(token), 10);
@@ -25,11 +26,12 @@ contract SimpleDexTest is Agent {
         // Give all roles 10ETH and 10Token
         setNativeBalance(lp, 10);
         token.transfer(lp, 10);
+
         setNativeBalance(user, 10);
         token.transfer(user, 10);
-        setNativeBalance(address(this), 10);
-        token.transfer(address(this), 10);
-        asAccountEnd();
+
+        setNativeBalance(agent, 10);
+        token.transfer(agent, 10);
     }
 
     function actionLpDeposit(uint256 amount) public {
@@ -52,13 +54,13 @@ contract SimpleDexTest is Agent {
         target.tokenToEth(amount);
     }
 
-    function invariantProtocolBalanceShouldAlwaysBeSafe() public {
+    function invariantProtocolBalanceShouldAlwaysBeSafe() public view {
         address protocol = address(target);
         assert(token.balanceOf(protocol) + protocol.balance >= 20);
     }
 
-    function invariantHackerCanNotGainToken() public {
-        assert(address(this).balance <= 20);
-        assert(token.balanceOf(address(this)) <= 20);
+    function invariantHackerCanNotGainToken() public view {
+        assert(agent.balance <= 20);
+        assert(token.balanceOf(agent) <= 20);
     }
 }

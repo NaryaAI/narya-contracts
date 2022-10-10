@@ -2,22 +2,22 @@
 pragma solidity ^0.8.0;
 
 import "src/basic/Flag.sol";
-import "@pwnednomore/contracts/Agent.sol";
+import "@pwnednomore/contracts/PTest.sol";
 
-contract FlagTest is Agent {
+contract FlagTest is PTest {
     Flag flag;
 
-    function setUp() external {
+    function setUp() public {
         flag = new Flag();
     }
 
-    function testSetFlags(int256 x, int256 y) external {
+    function testSetFlags(int256 x, int256 y) public {
         flag.set0(x);
         flag.set1(y);
         assert(flag.flag1());
     }
 
-    function invariantFlagIsTrue() external view {
+    function invariantFlagIsTrue() public view {
         assert(flag.flag1());
     }
 }

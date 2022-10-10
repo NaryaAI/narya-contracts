@@ -1,19 +1,20 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-import "@pwnednomore/contracts/Agent.sol";
+import "@pwnednomore/contracts/PTest.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "src/GameItems.sol";
 
-contract ERC1155SafeTransferFromTest is Agent, IERC1155Receiver {
+contract ERC1155SafeTransferFromTest is PTest, IERC1155Receiver {
     address alice = address(0x927);
+    address agent;
+
     GameItems gameItems;
     uint256 initAmount = 50;
 
-    function setUp() public {
-        address owner = address(0x1);
+    function setUp(address _agent) public override {
+        agent = _agent;
 
-        asAccountBegin(owner);
         gameItems = new GameItems();
         uint256[] memory items = new uint256[](2);
         items[0] = uint256(GameItems.Item.GOLD);
@@ -21,8 +22,13 @@ contract ERC1155SafeTransferFromTest is Agent, IERC1155Receiver {
         uint256[] memory amounts = new uint256[](2);
         amounts[0] = initAmount;
         amounts[1] = initAmount;
-        gameItems.safeBatchTransferFrom(owner, alice, items, amounts, "");
-        asAccountEnd();
+        gameItems.safeBatchTransferFrom(
+            address(this),
+            alice,
+            items,
+            amounts,
+            ""
+        );
     }
 
     function testSafeTransferFrom(
@@ -36,12 +42,12 @@ contract ERC1155SafeTransferFromTest is Agent, IERC1155Receiver {
 
         uint256 id = uint256(item);
         uint256 aliceBalance = gameItems.balanceOf(alice, id);
-        uint256 agentBalance = gameItems.balanceOf(address(this), id);
+        uint256 agentBalance = gameItems.balanceOf(agent, id);
 
         asAccountForNextCall(alice);
-        gameItems.setApprovalForAll(address(this), approved);
+        gameItems.setApprovalForAll(agent, approved);
 
-        gameItems.safeTransferFrom(alice, address(this), id, amount, "");
+        gameItems.safeTransferFrom(alice, agent, id, amount, "");
 
         assert(approved);
         assert(amount <= initAmount && amount <= aliceBalance);
@@ -50,31 +56,35 @@ contract ERC1155SafeTransferFromTest is Agent, IERC1155Receiver {
                 id == uint256(GameItems.Item.SILVER)
         );
         assert(gameItems.balanceOf(alice, id) == aliceBalance - amount);
-        assert(gameItems.balanceOf(address(this), id) == agentBalance + amount);
+        assert(gameItems.balanceOf(agent, id) == agentBalance + amount);
     }
 
     /// @dev ERC1155Receiver interfaces
     function onERC1155Received(
-        address operator,
-        address from,
-        uint256 id,
-        uint256 value,
-        bytes memory data
-    ) external override returns (bytes4){
+        address,
+        address,
+        uint256,
+        uint256,
+        bytes memory
+    ) external pure override returns (bytes4) {
         return this.onERC1155Received.selector;
     }
 
     function onERC1155BatchReceived(
-        address operator,
-        address from,
-        uint256[] memory ids,
-        uint256[] memory values,
-        bytes memory data
-    ) external override returns (bytes4) {
+        address,
+        address,
+        uint256[] memory,
+        uint256[] memory,
+        bytes memory
+    ) external pure override returns (bytes4) {
         return this.onERC1155BatchReceived.selector;
     }
 
-    function supportsInterface(bytes4 interfaceId) external view returns (bool) {
+    function supportsInterface(bytes4 interfaceId)
+        external
+        pure
+        returns (bool)
+    {
         return interfaceId == type(IERC1155Receiver).interfaceId;
     }
 }

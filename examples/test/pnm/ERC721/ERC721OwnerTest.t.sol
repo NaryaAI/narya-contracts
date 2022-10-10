@@ -1,21 +1,18 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-import "@pwnednomore/contracts/Agent.sol";
+import "@pwnednomore/contracts/PTest.sol";
 import "src/PFP.sol";
 
-contract ERC721OwnerTest is Agent {
+contract ERC721OwnerTest is PTest {
     address user = address(0x927);
+
     PFP pfp;
     uint256 id;
 
-    function setUp() public {
-        address owner = address(0x1);
-
-        asAccountBegin(owner);
+    function setUp(address) public override {
         pfp = new PFP();
         id = pfp.mint(user, "https://pnm.xyz/1");
-        asAccountEnd();
     }
 
     function invariantOwner() public view {

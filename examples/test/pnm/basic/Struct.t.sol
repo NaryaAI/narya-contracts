@@ -2,22 +2,22 @@
 pragma solidity ^0.8.0;
 
 import "src/basic/Struct.sol";
-import "@pwnednomore/contracts/Agent.sol";
+import "@pwnednomore/contracts/PTest.sol";
 
-contract StructTest is Agent {
+contract StructTest is PTest {
     Struct st;
 
-    function setUp() external {
+    function setUp(address) public override {
         st = new Struct();
     }
 
-    function testSetFlags(Param calldata x, Param calldata y) external {
+    function testSetFlags(Param calldata x, Param calldata y) public {
         st.set0(x);
         st.set1(y);
         assert(st.flag1());
     }
 
-    function invariantFlagIsTrue() external view {
+    function invariantFlagIsTrue() public view {
         assert(st.flag1());
     }
 }

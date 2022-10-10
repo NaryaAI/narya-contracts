@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-import "@pwnednomore/contracts/Agent.sol";
+import "@pwnednomore/contracts/PTest.sol";
 import "src/Token.sol";
 
-contract ERC20TransferTest is Agent {
+contract ERC20TransferTest is PTest {
     address owner;
     address user;
     Token token;
 
-    function setUp() public {
+    function setUp(address) public override {
         owner = address(0x1);
         user = address(0x927);
 

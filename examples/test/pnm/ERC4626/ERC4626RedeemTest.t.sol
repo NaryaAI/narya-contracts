@@ -1,23 +1,19 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-import "@pwnednomore/contracts/Agent.sol";
+import "@pwnednomore/contracts/PTest.sol";
 import "src/Token.sol";
 import "src/Vault.sol";
 
-contract ERC4626RedeemTest is Agent {
+contract ERC4626RedeemTest is PTest {
     address alice = address(0x927);
     uint256 amount = 1;
     Vault vault;
 
-    function setUp() public {
-        address owner = address(0x1);
-
-        asAccountBegin(owner);
+    function setUp(address) public override {
         Token token = new Token();
         vault = new Vault(token);
         token.transfer(alice, 50);
-        asAccountEnd();
 
         asAccountForNextCall(alice);
         vault.mint(1, alice);

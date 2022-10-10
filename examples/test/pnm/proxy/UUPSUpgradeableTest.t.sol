@@ -4,13 +4,13 @@ pragma solidity ^0.8.0;
 import "src/proxy/UUPSUpgradeableMock.sol";
 import "src/interfaces/IUUPSUpgradeableMock.sol";
 import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
-import "@pwnednomore/contracts/Agent.sol";
+import "@pwnednomore/contracts/PTest.sol";
 
-contract FlagUpgradeableTest is Agent {
+contract FlagUpgradeableTest is PTest {
     ERC1967Proxy proxy;
     UUPSUpgradeableMock mock;
 
-    function setUp() public {
+    function setUp(address) public override {
         mock = new UUPSUpgradeableMock();
         proxy = new ERC1967Proxy(
             address(mock),

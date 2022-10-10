@@ -1,31 +1,28 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-import "@pwnednomore/contracts/Agent.sol";
+import "@pwnednomore/contracts/PTest.sol";
 import "src/PFP.sol";
 
-contract ERC721TransferFromTest is Agent {
+contract ERC721TransferFromTest is PTest {
     address alice = address(0x927);
+    address agent;
+
     PFP pfp;
     uint256 id1;
     uint256 id2;
 
-    function setUp() public {
-        address owner = address(0x1);
+    function setUp(address _agent) public override {
+        agent = _agent;
 
-        asAccountBegin(owner);
         pfp = new PFP();
         id1 = pfp.mint(alice, "https://pnm.xyz/1");
-        asAccountEnd();
-
-        asAccountForNextCall(alice);
-        pfp.approve(address(this), id2);
     }
 
     function testTransferFrom(uint256 id) public {
-        try pfp.transferFrom(alice, address(this), id) {
+        try pfp.transferFrom(alice, agent, id) {
             assert(id == id1);
-            assert(pfp.ownerOf(id1) == address(this));
+            assert(pfp.ownerOf(id1) == agent);
         } catch {
             assert(pfp.ownerOf(id1) == alice);
         }
