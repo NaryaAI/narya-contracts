@@ -6,6 +6,4 @@ import "./ScriptEx.sol";
 import "./Agent.sol";
 import "./TestRunner.sol";
 
-abstract contract PTest is Test, ScriptEx {
-    function setUp(address agent) public virtual;
-}
+abstract contract PTest is Test, ScriptEx {}
