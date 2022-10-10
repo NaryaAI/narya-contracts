@@ -5,17 +5,18 @@ import "@pwnednomore/contracts/PTest.sol";
 import "src/Token.sol";
 
 contract ERC20TransferFromTest is PTest {
+    address owner = address(0x1);
     address alice = address(0x927);
-    address agent;
 
     Token token;
 
-    function setUp(address _agent) public override {
-        agent = _agent;
-
+    function setUp() public {
+        vm.startPrank(owner);
         token = new Token();
         token.transfer(alice, 50);
+        vm.stopPrank();
 
+        useDefaultAgent();
         asAccountForNextCall(alice);
         token.approve(agent, 20);
     }

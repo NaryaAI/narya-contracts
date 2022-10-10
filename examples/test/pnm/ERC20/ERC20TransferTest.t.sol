@@ -5,14 +5,11 @@ import "@pwnednomore/contracts/PTest.sol";
 import "src/Token.sol";
 
 contract ERC20TransferTest is PTest {
-    address owner;
-    address user;
+    address owner = address(0x1);
+    address user = address(0x927);
     Token token;
 
-    function setUp(address) public override {
-        owner = address(0x1);
-        user = address(0x927);
-
+    function setUp() public {
         asAccountBegin(owner);
         token = new Token();
         token.transfer(user, 50);

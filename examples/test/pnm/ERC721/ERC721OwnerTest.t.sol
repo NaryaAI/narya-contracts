@@ -10,7 +10,7 @@ contract ERC721OwnerTest is PTest {
     PFP pfp;
     uint256 id;
 
-    function setUp(address) public override {
+    function setUp() public {
         pfp = new PFP();
         id = pfp.mint(user, "https://pnm.xyz/1");
     }

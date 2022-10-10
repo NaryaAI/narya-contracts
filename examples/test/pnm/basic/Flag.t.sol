@@ -9,6 +9,8 @@ contract FlagTest is PTest {
 
     function setUp() public {
         flag = new Flag();
+
+        useDefaultAgent();
     }
 
     function testSetFlags(int256 x, int256 y) public {

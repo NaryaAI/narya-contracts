@@ -5,16 +5,18 @@ import "@pwnednomore/contracts/PTest.sol";
 import "src/Token.sol";
 
 contract ERC20TotalSupplyTest is PTest {
+    address owner = address(0x1);
+
     Token token;
     uint256 totalSupply;
 
-    address agent;
-
-    function setUp(address _agent) public override {
-        agent = _agent;
-
+    function setUp() public {
+        vm.startPrank(owner);
         token = new Token();
         totalSupply = token.totalSupply();
+        vm.stopPrank();
+
+        useDefaultAgent();
     }
 
     function invariantTotalSupplyShouldNeverChange() public view {

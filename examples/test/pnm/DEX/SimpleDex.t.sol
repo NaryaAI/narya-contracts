@@ -6,15 +6,17 @@ import {SimpleDex} from "src/SimpleDex.sol";
 import {Token} from "src/Token.sol";
 
 contract SimpleDexTest is PTest {
+    address owner = address(0x1);
     address lp = address(0x37);
     address user = address(0x38);
-    address agent;
 
     Token token;
     SimpleDex target;
 
-    function setUp(address _agent) public override {
-        agent = _agent;
+    function setUp() public {
+        useDefaultAgent();
+
+        vm.startPrank(owner);
 
         // Setup DEX with 10ETH and 10Token
         token = new Token();
@@ -32,6 +34,8 @@ contract SimpleDexTest is PTest {
 
         setNativeBalance(agent, 10);
         token.transfer(agent, 10);
+
+        vm.stopPrank();
     }
 
     function actionLpDeposit(uint256 amount) public {

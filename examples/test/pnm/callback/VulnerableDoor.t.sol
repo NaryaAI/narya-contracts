@@ -14,6 +14,8 @@ contract VulnerableDoorTest is PTest {
 
     function setUp(address) public override {
         target = new VulnerableDoor();
+
+        useDefaultAgent();
     }
 
     function invariantNotStolen() public view {

@@ -10,12 +10,14 @@ contract FlagUpgradeableTest is PTest {
     ERC1967Proxy proxy;
     UUPSUpgradeableMock mock;
 
-    function setUp(address) public override {
+    function setUp() public {
         mock = new UUPSUpgradeableMock();
         proxy = new ERC1967Proxy(
             address(mock),
             abi.encodeWithSignature("initialize()")
         );
+
+        useDefaultAgent();
     }
 
     // flag1 should always be true

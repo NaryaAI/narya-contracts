@@ -5,18 +5,18 @@ import "@pwnednomore/contracts/PTest.sol";
 import "src/Token.sol";
 
 contract ERC20BalanceTest is PTest {
+    address owner = address(0x1);
+    address user = address(0x927);
+
     Token token;
 
-    address user;
-
-    address public agent;
-
-    function setUp(address _agent) public override {
-        user = address(0x927);
-        agent = _agent;
-
+    function setUp() public {
+        vm.startPrank(owner);
         token = new Token();
         token.transfer(user, 50);
+        vm.stopPrank();
+
+        useDefaultAgent();
     }
 
     function invariantBalanceShouldNotChange() public view {

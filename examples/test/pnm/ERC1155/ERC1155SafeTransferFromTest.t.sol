@@ -6,15 +6,14 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "src/GameItems.sol";
 
 contract ERC1155SafeTransferFromTest is PTest, IERC1155Receiver {
+    address owner = address(0x1);
     address alice = address(0x927);
-    address agent;
 
     GameItems gameItems;
     uint256 initAmount = 50;
 
-    function setUp(address _agent) public override {
-        agent = _agent;
-
+    function setUp() public {
+        vm.startPrank(owner);
         gameItems = new GameItems();
         uint256[] memory items = new uint256[](2);
         items[0] = uint256(GameItems.Item.GOLD);
@@ -22,13 +21,10 @@ contract ERC1155SafeTransferFromTest is PTest, IERC1155Receiver {
         uint256[] memory amounts = new uint256[](2);
         amounts[0] = initAmount;
         amounts[1] = initAmount;
-        gameItems.safeBatchTransferFrom(
-            address(this),
-            alice,
-            items,
-            amounts,
-            ""
-        );
+        gameItems.safeBatchTransferFrom(owner, alice, items, amounts, "");
+        vm.stopPrank();
+
+        useDefaultAgent();
     }
 
     function testSafeTransferFrom(
