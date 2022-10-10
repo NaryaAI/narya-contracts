@@ -10,21 +10,21 @@ contract PTest is Test, ScriptEx {
 
     bytes4 internal constant MAIN = bytes4(0xffffffff);
 
-    Agent public agent;
+    address public agent;
     bytes internal invariantCalldata;
 
-    function useAgent(Agent _agent) public {
+    function useAgent(address _agent) public {
         agent = _agent;
     }
 
     function useDefaultAgent() public {
-        useAgent(new Agent());
+        useAgent(address(new Agent()));
     }
 
     function callAgent(Call[] calldata calls) public {
         uint256 i;
         for (i = 0; i < calls.length; i++) {
-            vm.prank(address(agent));
+            vm.prank(agent);
             (bool success, bytes memory result) = calls[i].to.call(
                 calls[i].callData
             );
