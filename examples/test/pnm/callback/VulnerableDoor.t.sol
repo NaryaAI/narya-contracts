@@ -12,7 +12,7 @@ import "@pwnednomore/contracts/PTest.sol";
 contract VulnerableDoorTest is PTest {
     VulnerableDoor target;
 
-    function setUp(address) public override {
+    function setUp() public {
         target = new VulnerableDoor();
 
         useDefaultAgent();

@@ -21,7 +21,7 @@ contract PTest is Test, ScriptEx {
         useAgent(address(new Agent()));
     }
 
-    function callAgent(Call[] calldata calls) public {
+    function run(Call[] calldata calls) public {
         uint256 i;
         for (i = 0; i < calls.length; i++) {
             vm.prank(agent);
