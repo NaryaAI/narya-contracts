@@ -45,9 +45,11 @@ contract PTest is Test, ScriptEx {
     }
 
     function checkInvariant() internal {
+        uint256 snapshot = vm.snapshot();
         (bool success, bytes memory result) = address(this).call(
             invariantCalldata
         );
+        vm.revertTo(snapshot);
 
         if (!success) {
             if (result.length < 68) revert();
