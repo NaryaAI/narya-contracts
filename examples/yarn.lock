@@ -660,7 +660,7 @@
   integrity sha512-dGRS0agJzu8ybo44pCIf3xBaPQN/65AIXNgK8+4gzKd5kbvlqyxryUYVLJv7fK98Seyd2hDZzVEHSWAh0Bt1Yw==
 
 "@pwnednomore/contracts@../contracts":
-  version "0.1.0"
+  version "0.2.0"
 
 "@scure/base@~1.1.0":
   version "1.1.1"
