@@ -7,10 +7,10 @@
   "homepage": "https://pwnednomore.org",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PwnedNoMore/pwnednomore-contracts.git"
+    "url": "git+https://github.com/PwnedNoMore/pnm-contracts.git"
   },
   "bugs": {
-    "url": "https://github.com/PwnedNoMore/pwnednomore-contracts/issues"
+    "url": "https://github.com/PwnedNoMore/pnm-contracts/issues"
   },
   "scripts": {
   }

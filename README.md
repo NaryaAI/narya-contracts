@@ -1,12 +1,12 @@
 # PwnedNoMore | Contracts
 
 ## Developping
-To test and debug `pwnednomore-contracts` API: 
+To test and debug `pnm-contracts` API:
 
 ```
-# clone and prepare pwnednomore-contracts environment
-git clone git@github.com:PwnedNoMore/pwnednomore-contracts.git
-cd /path/to/pwnednomore-contracts
+# clone and prepare pnm-contracts environment
+git clone git@github.com:PwnedNoMore/pnm-contracts.git
+cd /path/to/pnm-contracts
 npm install
 npm link
 
@@ -81,13 +81,13 @@ Same with `Vm` in foundry, `VmEx` also locate at `0x7109709ECfa91a80626fF3989D68
 
 ```solidity
 
-    // for mapping(uint256 => xx), get slot index of value 
+    // for mapping(uint256 => xx), get slot index of value
     function mapKeyUint256SlotByName(address who, string memory mapName, uint256 key) internal view returns (uint256) {
         uint256 mapSlot = vmex.getVarSlotIndex(who, mapName);
         return uint256(keccak256(abi.encodePacked(key, mapSlot)));
     }
 
-    // for mapping(address => xx), get slot index of value 
+    // for mapping(address => xx), get slot index of value
     function mapKeyAddressSlotByName(address who, string memory mapName, address key) internal view returns (uint256) {
         uint256 mapSlot = vmex.getVarSlotIndex(who, mapName);
         return uint256(keccak256(abi.encode(key, mapSlot)));
@@ -98,10 +98,10 @@ Because there could be multiple definitions of mapping, we only provide basic ab
 
 Combining with `readIntBySlot | readInt8BySlot | readUintBySlot | readUint8BySlot`, we can get mapping value.
 
-More complicated, `Embedding mapping`, for example: 
+More complicated, `Embedding mapping`, for example:
 
 > Here is a embedding mapping `mapping(uint, mapping(uint, uint)) embed`.
-> 
+>
 > Our target is to read value of `embed[123][address(0x79)]`:
 
 ```solidity
@@ -179,7 +179,7 @@ contract TestPrivDummy is Agent {
 ## Q&A
 1. `Evm Revert` error in trace report.
 
-> Possible Solution: 
+> Possible Solution:
 > check target variable type and API usage. var type should be same with API:
 
 | variable type | API for reading variable |
