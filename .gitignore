@@ -2,4 +2,6 @@
 .DS_Store
 yarn*.log
 
-crashes
+# Deps and out
+/node_modules/
+/out/
