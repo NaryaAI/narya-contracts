@@ -4,4 +4,5 @@ yarn*.log
 
 # Deps and out
 /node_modules/
+/cache/
 /out/
