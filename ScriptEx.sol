@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.9.0;
 
+import "forge-std/Script.sol";
 import "./VmEx.sol";
 
-abstract contract ScriptEx {
+abstract contract ScriptEx is Script {
     address constant private VM_ADDRESS =
     address(bytes20(uint160(uint256(keccak256('hevm cheat code')))));
 
-    VmEx public constant vm = VmEx(VM_ADDRESS);
+    VmEx public constant vmEx = VmEx(VM_ADDRESS);
 
     // Sets the *next* call's msg.sender to be the input address
     function asAccountForNextCall(address addr) public {
@@ -36,7 +37,7 @@ abstract contract ScriptEx {
 
     // for mapping(uint256 => xx), get slot index of value by map variable name
     function mapKeyUint256SlotByName(address who, string memory mapName, uint256 key) internal view returns (uint256) {
-        uint256 mapSlot = vm.getVarSlotIndex(who, mapName);
+        uint256 mapSlot = vmEx.getVarSlotIndex(who, mapName);
         return uint256(keccak256(abi.encodePacked(key, mapSlot)));
     }
 
@@ -47,7 +48,7 @@ abstract contract ScriptEx {
 
     // for mapping(address => xx), get slot index of value by map variable name
     function mapKeyAddressSlotByName(address who, string memory mapName, address key) internal view returns (uint256) {
-        uint256 mapSlot = vm.getVarSlotIndex(who, mapName);
+        uint256 mapSlot = vmEx.getVarSlotIndex(who, mapName);
         return uint256(keccak256(abi.encode(key, mapSlot)));
     }
 
