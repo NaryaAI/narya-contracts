@@ -33,4 +33,24 @@ contract Agent is ScriptEx {
             }
         }
     }
+
+    function onERC1155BatchReceived(
+        address,
+        address,
+        uint256[] memory,
+        uint256[] memory,
+        bytes memory
+    ) external pure returns (bytes4) {
+        return this.onERC1155BatchReceived.selector; // 0xbc197c81
+    }
+
+    function onERC1155Received(
+        address,
+        address,
+        uint256,
+        uint256,
+        bytes memory
+    ) external pure returns (bytes4) {
+        return this.onERC1155Received.selector; // 0xf23a6e61
+    }
 }
