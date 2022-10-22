@@ -10,6 +10,17 @@ contract Agent is ScriptEx {
     bytes4 internal constant FALLBACK = bytes4(0x00000000);
     bytes4 internal constant ON_ERC721_RECEIVED = bytes4(0x150b7a02);
 
+    function call(Call calldata c) external payable {
+        (bool success, bytes memory result) = c.to.call(c.callData);
+        if (!success) {
+            if (result.length < 68) revert();
+            assembly {
+                result := add(result, 0x04)
+            }
+            revert(abi.decode(result, (string)));
+        }
+    }
+
     function onERC721Received(Call[] calldata calls) external returns (bytes4) {
         _callback(ON_ERC721_RECEIVED, calls);
         return ON_ERC721_RECEIVED;
