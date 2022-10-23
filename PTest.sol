@@ -6,13 +6,12 @@ import "./ScriptEx.sol";
 import "./Agent.sol";
 
 contract PTest is Test, ScriptEx {
-    address public agent;
+    Agent private _agent;
 
-    function useAgent(address _agent) public {
-        agent = _agent;
-    }
-
-    function useDefaultAgent() public {
-        useAgent(address(new Agent()));
+    function getAgent() public returns (address) {
+        if (address(_agent) == address(0)) {
+            _agent = new Agent();
+        }
+        return address(_agent);
     }
 }
