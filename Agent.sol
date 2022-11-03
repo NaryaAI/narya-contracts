@@ -51,7 +51,7 @@ contract Agent is ScriptEx {
         uint256[] memory,
         uint256[] memory,
         bytes memory
-    ) external pure returns (bytes4) {
+    ) public returns (bytes4) {
         return this.onERC1155BatchReceived.selector; // 0xbc197c81
     }
 
@@ -61,7 +61,7 @@ contract Agent is ScriptEx {
         uint256,
         uint256,
         bytes memory
-    ) external pure returns (bytes4) {
+    ) public returns (bytes4) {
         return this.onERC1155Received.selector; // 0xf23a6e61
     }
 }
