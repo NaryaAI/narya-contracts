@@ -34,7 +34,7 @@ contract Agent is ScriptEx {
         _callback(selector, calls);
     }
 
-    function _callback(bytes4 selector, Call[] calldata calls) internal {
+    function _callback(bytes4 selector, Call[] memory calls) internal {
         uint256 i;
         for (i = 0; i < calls.length; i++) {
             (bool success, ) = calls[i].to.call(calls[i].callData);
