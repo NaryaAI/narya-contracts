@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.9.0;
+pragma experimental ABIEncoderV2;
 
 import "./interfaces/IAgent.sol";
 import "./ScriptEx.sol";
@@ -30,11 +31,7 @@ contract Agent is ScriptEx {
         _callback(FALLBACK, calls);
     }
 
-    function callback(bytes4 selector, Call[] calldata calls) external {
-        _callback(selector, calls);
-    }
-
-    function _callback(bytes4 selector, Call[] memory calls) internal {
+    function _callback(bytes4 selector, Call[] calldata calls) external {
         uint256 i;
         for (i = 0; i < calls.length; i++) {
             (bool success, ) = calls[i].to.call(calls[i].callData);
@@ -48,10 +45,10 @@ contract Agent is ScriptEx {
     function onERC1155BatchReceived(
         address,
         address,
-        uint256[] memory,
-        uint256[] memory,
-        bytes memory
-    ) public returns (bytes4) {
+        uint256[] calldata,
+        uint256[] calldata,
+        bytes calldata
+    ) external returns (bytes4) {
         return this.onERC1155BatchReceived.selector; // 0xbc197c81
     }
 
@@ -60,8 +57,8 @@ contract Agent is ScriptEx {
         address,
         uint256,
         uint256,
-        bytes memory
-    ) public returns (bytes4) {
+        bytes calldata
+    ) external returns (bytes4) {
         return this.onERC1155Received.selector; // 0xf23a6e61
     }
 }
