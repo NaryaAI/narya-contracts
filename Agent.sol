@@ -11,7 +11,7 @@ contract Agent is ScriptEx {
     bytes4 internal constant FALLBACK = bytes4(0x00000000);
     bytes4 internal constant ON_ERC721_RECEIVED = bytes4(0x150b7a02);
 
-    function call(Call calldata c) external payable {
+    function call(Call memory c) public payable {
         (bool success, bytes memory result) = c.to.call(c.callData);
         if (!success) {
             if (result.length < 68) revert();
@@ -22,16 +22,20 @@ contract Agent is ScriptEx {
         }
     }
 
-    function onERC721Received(Call[] calldata calls) external returns (bytes4) {
+    function onERC721Received(Call[] memory calls) public returns (bytes4) {
         _callback(ON_ERC721_RECEIVED, calls);
         return ON_ERC721_RECEIVED;
     }
 
-    function fallback(Call[] calldata calls) external payable {
+    function fallback(Call[] memory calls) public payable {
         _callback(FALLBACK, calls);
     }
 
-    function _callback(bytes4 selector, Call[] calldata calls) external {
+    function callback(bytes4 selector, Call[] memory calls) public {
+        _callback(selector, calls);
+    }
+
+    function _callback(bytes4 selector, Call[] memory calls) internal {
         uint256 i;
         for (i = 0; i < calls.length; i++) {
             (bool success, ) = calls[i].to.call(calls[i].callData);
@@ -45,10 +49,10 @@ contract Agent is ScriptEx {
     function onERC1155BatchReceived(
         address,
         address,
-        uint256[] calldata,
-        uint256[] calldata,
-        bytes calldata
-    ) external returns (bytes4) {
+        uint256[] memory,
+        uint256[] memory,
+        bytes memory
+    ) public returns (bytes4) {
         return this.onERC1155BatchReceived.selector; // 0xbc197c81
     }
 
@@ -57,8 +61,8 @@ contract Agent is ScriptEx {
         address,
         uint256,
         uint256,
-        bytes calldata
-    ) external returns (bytes4) {
+        bytes memory
+    ) public returns (bytes4) {
         return this.onERC1155Received.selector; // 0xf23a6e61
     }
 }
