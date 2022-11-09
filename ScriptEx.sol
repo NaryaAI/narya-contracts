@@ -5,10 +5,10 @@ import "forge-std/Script.sol";
 import "./VmEx.sol";
 
 abstract contract ScriptEx is Script {
-    address constant private VM_ADDRESS =
+    address constant private VM_EX_ADDRESS =
     address(bytes20(uint160(uint256(keccak256('hevm cheat code')))));
 
-    VmEx public constant vmEx = VmEx(VM_ADDRESS);
+    VmEx public constant vmEx = VmEx(VM_EX_ADDRESS);
 
     // Sets the *next* call's msg.sender to be the input address
     function asAccountForNextCall(address addr) public {
