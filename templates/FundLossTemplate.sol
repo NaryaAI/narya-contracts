@@ -36,8 +36,49 @@ abstract contract FundLossTemplate is PTest {
     // This is where you define how to calculate the vaule you want to check
     function getTargetBalance(address target) public virtual returns (uint256);
 
-    // Check fund status for each roles
-    function checkProtocolFundIsSafe(address protocol, uint256 initValue) public virtual;
-    function checkUserFundIsSafe(address user, uint256 initValue) public virtual;
-    function checkAgentFundNoGain(address agent, uint256 initValue) public virtual;
+    // Check fund status for each roles, you could override to define your own logic
+
+    function checkProtocolFundIsSafe(address protocol, uint256 initValue)
+        public
+        virtual
+    {
+        if (initValue > 0) {
+            uint256 currentValue = this.getTargetBalance(protocol);
+            require(
+                currentValue >= initValue / 2,
+                "Protocol balance is reduced more than half"
+            );
+        }
+    }
+
+    function checkUserFundIsSafe(address user, uint256 initValue)
+        public
+        virtual
+    {
+        if (initValue > 0) {
+            uint256 currentValue = this.getTargetBalance(user);
+            require(
+                currentValue >= initValue / 2,
+                "User balance is reduced more than half"
+            );
+        }
+    }
+
+    function checkAgentFundNoGain(address agent, uint256 initValue)
+        public
+        virtual
+    {
+        uint256 currentValue = this.getTargetBalance(agent);
+        if (initValue == 0) {
+            require(
+                currentValue == 0,
+                "Agent balance is increased from nowhere"
+            );
+        } else {
+            require(
+                currentValue < (initValue + initValue / 2),
+                "Agent balance is increased more than 50%"
+            );
+        }
+    }
 }
