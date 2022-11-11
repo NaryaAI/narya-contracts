@@ -7,26 +7,25 @@ abstract contract FundLossTemplate is PTest {
     address protocol;
     address owner = makeAddr("owner");
     address user = makeAddr("user");
-    address hacker;
+    address agent;
 
     uint256 protocolInitValue;
     uint256 userInitValue;
-    uint256 hackerInitValue;
+    uint256 agentInitValue;
 
     function setUp() public {
-        hacker = getAgent();
+        agent = getAgent();
         protocol = this.deploy();
 
-        this.protocolInitValue = this.getTargetBalance(protocol);
-        this.userInitValue = this.getTargetBalance(user);
-        this.hackerInitValue = this.getTargetBalance(hacker);
+        protocolInitValue = this.getTargetBalance(protocol);
+        userInitValue = this.getTargetBalance(user);
+        agentInitValue = this.getTargetBalance(agent);
     }
 
     function invariantCheckFund() public {
-        checkFundIsSafe(protocol, protocolInitValue);
-        checkFundIsSafe(user, userInitValue);
-
-        checkFundNoGain(hacker, hackerInitValue);
+        checkProtocolFundIsSafe(protocol, protocolInitValue);
+        checkUserFundIsSafe(user, userInitValue);
+        checkAgentFundNoGain(agent, agentInitValue);
     }
 
     // You need to define following functions for your test case
@@ -37,8 +36,8 @@ abstract contract FundLossTemplate is PTest {
     // This is where you define how to calculate the vaule you want to check
     function getTargetBalance(address target) public virtual returns (uint256);
 
-    // Define criteria about fund loss checks
-    function checkFundIsSafe(address target, uint256 initValue) public virtual;
-
-    function checkFundNoGain(address target, uint256 initValue) public virtual;
+    // Check fund status for each roles
+    function checkProtocolFundIsSafe(address protocol, uint256 initValue) public virtual;
+    function checkUserFundIsSafe(address user, uint256 initValue) public virtual;
+    function checkAgentFundNoGain(address agent, uint256 initValue) public virtual;
 }
