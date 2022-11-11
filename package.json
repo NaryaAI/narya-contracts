@@ -1,7 +1,7 @@
 {
   "name": "@pwnednomore/contracts",
   "description": "Smart contracts from PwnedNoMore",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "license": "MIT",
   "author": "PwnedNoMore",
   "homepage": "https://pwnednomore.org",
