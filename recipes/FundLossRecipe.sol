@@ -3,7 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import {PTest} from "../PTest.sol";
 
-abstract contract FundLossTemplate is PTest {
+abstract contract FundLossRecipe is PTest {
     address protocol;
     address owner = makeAddr("owner");
     address user = makeAddr("user");
@@ -28,15 +28,16 @@ abstract contract FundLossTemplate is PTest {
         checkAgentFundNoGain(agent, agentInitValue);
     }
 
-    // You need to define following functions for your test case
+    // [Requied] You need to define following functions for your test case
 
-    // Deploy your contract here
+    // Define how to deploy the contract(s) to be tested
+    // Returns the one for balance checking
     function deploy() public virtual returns (address);
 
-    // This is where you define how to calculate the vaule you want to check
+    // Define how to calculate the vaule you want to check
     function getTargetBalance(address target) public virtual returns (uint256);
 
-    // Check fund status for each roles, you could override to define your own logic
+    // [Optional] You could override following functions to define your own logic
 
     function checkProtocolFundIsSafe(address protocol, uint256 initValue)
         public
