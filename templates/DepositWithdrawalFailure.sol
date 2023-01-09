@@ -4,8 +4,6 @@ pragma solidity >=0.8.0 <0.9.0;
 import {PTest} from "../PTest.sol";
 
 abstract contract DepositWithdrawalFailureTest is PTest {
-    address internal user = makeAddr("USER");
-
     // Test setup.
     function setUp() public {
         deploy();
