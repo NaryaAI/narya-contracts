@@ -24,5 +24,5 @@ abstract contract DepositWithdrawalFailureTest is PTest {
 
     // Calls withdraw() and check if the asset balance of the user is not
     // smaller than the initial balance.
-    function invariantUserWithdrawalFailure() public virtual;
+    function invariantDepositWithdrawalFailure() public virtual;
 }
