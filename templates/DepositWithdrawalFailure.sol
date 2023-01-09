@@ -10,19 +10,19 @@ abstract contract DepositWithdrawalFailureTest is PTest {
         init();
     }
 
-    // Deploy the smart contracts to be tested.
+    // Deploys the smart contracts to be tested.
     function deploy() public virtual;
 
-    // Initialize user assets and make deposits.
-    // You should call deposit() in this function.
+    // Initializes user assets and calls deposit() to make deposit.
     function init() public virtual;
 
-    // Deposit user assets into the smart contract.
+    // Deposits user assets into the smart contract.
     function deposit() public virtual;
 
-    // Withdraw user assets from the smart contract.
+    // Withdraws user assets from the smart contract.
     function withdraw() public virtual;
 
-    // Check if at any time, user can withdraw the amount of assets once deposited.
+    // Calls withdraw() and check if the asset balance of the user is not
+    // smaller than the initial balance.
     function invariantUserWithdrawalFailure() public virtual;
 }

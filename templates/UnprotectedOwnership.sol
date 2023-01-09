@@ -12,10 +12,11 @@ abstract contract UnprotectedOwnershipTest is PTest {
         init();
     }
 
-    // Deploy the smart contracts to be tested.
+    // Deploys the smart contracts to be tested.
     function deploy() public virtual;
 
-    // Initialize the states of the smart contracts.
+    // Initializes the owner of the smart contract if not set and
+    // calls initOwner().
     function init() public virtual;
 
     // Return the current owner of your smart contract.
@@ -26,7 +27,7 @@ abstract contract UnprotectedOwnershipTest is PTest {
         oldOwner = getOwner();
     }
 
-    // Check the owner of your smart contract is not changed
+    // Check if the owner of your smart contract is changed.
     function invariantUnprotectedOwnership() public virtual {
         assert(getOwner() == oldOwner);
     }

@@ -13,13 +13,14 @@ abstract contract UnboundedProfitTest is PTest {
         init();
     }
 
-    // Deploy the smart contracts to be tested.
+    // Deploys the smart contracts to be tested.
     function deploy() public virtual;
 
-    // Initialize the states of the smart contracts.
+    // 1. Adding assets to the smart contracts.
+    // 2. Initializes the initial assets for the agent and calls initBalance().
     function init() public virtual;
 
-    // Gets the current balance of the agent.
+    // Returns the total value of the assets owned by the agent.
     function getBalance() public virtual returns (uint256);
 
     // Records the initial balance of the agent.
@@ -27,12 +28,15 @@ abstract contract UnboundedProfitTest is PTest {
         oldBalance = getBalance();
     }
 
-    // Gets the profit limit.
-    // The upper bound of the profit = the initial balance * limit / 100.
+    // Gets the upper limit of the profit gained by the agent.
+    // By default, it is 1%.
     function getLimit() public virtual returns (uint256) {
         return DEFAULT_LIMIT;
     }
 
+    // The asset balane of the agent should not:
+    // 1. Increase from 0 to any positive number.
+    // 2. Increase by 1%.
     function invariantUnboundedProfit() public virtual {
         uint256 newBalance = getBalance();
 
