@@ -8,17 +8,17 @@ abstract contract UnboundedProfitTest is PTest {
     uint256 internal constant DEFAULT_LIMIT = 101;
 
     // Test setup.
-    function setUp() public {
+    function setUp() public virtual {
         deploy();
         init();
     }
 
     // Deploys the smart contracts to be tested.
-    function deploy() public virtual;
+    function deploy() public virtual {}
 
     // 1. Adding assets to the smart contracts.
     // 2. Initializes the initial assets for the agent and calls initBalance().
-    function init() public virtual;
+    function init() public virtual {}
 
     // Returns the total value of the assets owned by the agent.
     function getBalance() public virtual returns (uint256);

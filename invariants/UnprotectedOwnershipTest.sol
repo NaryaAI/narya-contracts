@@ -7,17 +7,17 @@ abstract contract UnprotectedOwnershipTest is PTest {
     address internal oldOwner;
 
     // Test setup.
-    function setUp() public {
+    function setUp() public virtual {
         deploy();
         init();
     }
 
     // Deploys the smart contracts to be tested.
-    function deploy() public virtual;
+    function deploy() public virtual {}
 
     // Initializes the owner of the smart contract if not set and
     // calls initOwner().
-    function init() public virtual;
+    function init() public virtual {}
 
     // Return the current owner of your smart contract.
     function getOwner() public virtual returns (address);

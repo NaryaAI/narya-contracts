@@ -5,16 +5,16 @@ import {PTest} from "../PTest.sol";
 
 abstract contract DepositWithdrawalFailureTest is PTest {
     // Test setup.
-    function setUp() public {
+    function setUp() public virtual {
         deploy();
         init();
     }
 
     // Deploys the smart contracts to be tested.
-    function deploy() public virtual;
+    function deploy() public virtual {}
 
     // Initializes user assets and calls deposit() to make deposit.
-    function init() public virtual;
+    function init() public virtual {}
 
     // Deposits user assets into the smart contract.
     function deposit() public virtual;
