@@ -3,7 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import {PTest} from "../PTest.sol";
 
-abstract contract DesignedProfitRangeBroken is PTest {
+abstract contract DesignedProfitRangeBrokenTest is PTest {
     uint256 internal oldBalance;
     uint256 internal constant DEFAULT_LIMIT = 101;
 
