@@ -3,7 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import {PTest} from "../PTest.sol";
 
-abstract contract UnboundedProfitTest is PTest {
+abstract contract DesignedProfitRangeBroken is PTest {
     uint256 internal oldBalance;
     uint256 internal constant DEFAULT_LIMIT = 101;
 
@@ -37,7 +37,7 @@ abstract contract UnboundedProfitTest is PTest {
     // The asset balane of the agent should not:
     // 1. Increase from 0 to any positive number.
     // 2. Increase by 1%.
-    function invariantUnboundedProfit() public virtual {
+    function invariantDesignedProfitRangeBroken() public virtual {
         uint256 newBalance = getBalance();
 
         if (oldBalance == 0) {
