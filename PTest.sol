@@ -5,10 +5,14 @@ import "forge-std/Test.sol";
 import "./ScriptEx.sol";
 
 contract PTest is Test, ScriptEx {
-    address constant _agent =
-        address(bytes20(uint160(uint256(keccak256("pnm.agent")))));
+    uint256 private constant AGENT_PRIVATE_KEY =
+        uint256(keccak256("pnm.agent"));
 
-    function getAgent() public pure returns (address) {
-        return _agent;
+    function getAgent() internal returns (address) {
+        return vm.addr(AGENT_PRIVATE_KEY);
+    }
+
+    function getAgentKey() public pure returns (uint256) {
+        return AGENT_PRIVATE_KEY;
     }
 }
