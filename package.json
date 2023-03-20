@@ -1,16 +1,16 @@
 {
-  "name": "@pwnednomore/contracts",
-  "description": "Smart contracts from PwnedNoMore",
+  "name": "@narya-ai/contracts",
+  "description": "Smart contracts from Narya.ai",
   "version": "0.3.5",
   "license": "MIT",
-  "author": "PwnedNoMore",
-  "homepage": "https://pwnednomore.org",
+  "author": "Narya.ai",
+  "homepage": "https://narya.ai",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PwnedNoMore/pnm-contracts.git"
+    "url": "git+https://github.com/NaryaAi/narya-contracts.git"
   },
   "bugs": {
-    "url": "https://github.com/PwnedNoMore/pnm-contracts/issues"
+    "url": "https://github.com/NaryaAi/narya-contracts/issues"
   },
   "scripts": {
     "build": "forge build --contracts .",

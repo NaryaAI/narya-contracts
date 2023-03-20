@@ -1,18 +1,18 @@
-# PwnedNoMore | Contracts
+# Narya.ai | Contracts
 
 ## Developping
-To test and debug `pnm-contracts` API:
+To test and debug `narya-contracts` API:
 
 ```
-# clone and prepare pnm-contracts environment
-git clone git@github.com:PwnedNoMore/pnm-contracts.git
-cd /path/to/pnm-contracts
-npm install
-npm link
+# clone and prepare narya-contracts environment
+git clone https://github.com/NaryaAi/narya-contracts.git
+cd /path/to/narya-contracts
+yarn install
+yarn link
 
 # goto target contract root
 cd /path/to/target/contract/project/root
-npm link pwnednomore-solidity
+yarn link narya-contracts
 ```
 
 ## Cheatcodes Extension
@@ -151,9 +151,9 @@ Our invariant is `mapAddress[address(0x79)] != 23`. we can implement this invari
 pragma solidity ^0.8.0;
 
 import "contracts/Dummy.sol";
-import "pwnednomore-solidity/contracts/Agent.sol";
+import "narya-contracts/PTest.sol";
 
-contract TestPrivDummy is Agent {
+contract TestPrivDummy is PTest {
     Dummy dummy;
 
     function setUp() public {
