@@ -10,6 +10,8 @@ abstract contract ScriptEx is Script {
 
     VmEx public constant vmEx = VmEx(VM_EX_ADDRESS);
 
+    address[] private _targetedAccounts;
+
     // Sets the *next* call's msg.sender to be the input address
     function asAccountForNextCall(address addr) public {
         vm.prank(addr);
@@ -55,5 +57,14 @@ abstract contract ScriptEx is Script {
     // for mapping(addresss => xx), get slot index of value by map variable slot index
     function mapKeyAddressSlotBySlot(address who, uint256 mapSlot, address key) internal pure returns (uint256) {
         return uint256(keccak256(abi.encodePacked(key, mapSlot)));
+    }
+
+    function targetAccount(address newTargetedAccount_) internal {
+        _targetedAccounts.push(newTargetedAccount_);
+    }
+
+    // get All target accounts
+    function targetAccounts() public view returns (address[] memory targetedAccounts_) {
+        targetedAccounts_ = _targetedAccounts;
     }
 }
