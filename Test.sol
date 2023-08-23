@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.6.0 <0.9.0;
 
-import "forge-std/Test.sol";
-import "./ScriptEx.sol";
+pragma experimental ABIEncoderV2;
 
-contract PTest is Test, ScriptEx {
+import {Test as ForgeTest} from "forge-std/Test.sol";
+import {ScriptEx} from "./ScriptEx.sol";
+
+contract Test is ForgeTest, ScriptEx {
     uint256 private constant AGENT_PRIVATE_KEY =
         uint256(keccak256("pnm.agent"));
 
