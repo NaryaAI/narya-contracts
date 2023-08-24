@@ -3,10 +3,10 @@ pragma solidity >=0.6.0 <0.9.0;
 
 pragma experimental ABIEncoderV2;
 
-import {Test as ForgeTest} from "forge-std/Test.sol";
+import {Test} from "forge-std/Test.sol";
 import {ScriptEx} from "./ScriptEx.sol";
 
-contract Test is ForgeTest, ScriptEx {
+contract NaryaTest is Test, ScriptEx {
     uint256 private constant AGENT_PRIVATE_KEY =
         uint256(keccak256("pnm.agent"));
 
